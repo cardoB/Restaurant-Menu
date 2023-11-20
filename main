@@ -1,0 +1,124 @@
+//
+//  main.cpp
+//  Final Exam - Part II
+//
+//  Created by Riccardo Belletta on 2/23/23.
+//
+
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class MenuItemType
+{
+private:
+    // Items offered
+    string items[7] = {"Plain Egg", "Bacon and Egg", "Muffin", "French Toast", "Fruit Basket", "Cereal", "Coffee"};
+    
+    // Prices per item, in dollars
+    double prices[7] = {1.45, 2.45, 0.99, 1.99, 2.49, 0.69, 0.5};
+    
+    // Number of items selected by the customer
+    int menuList[7] = {0};
+    
+public:
+    void getData();
+    void showMenu();
+    void printCheck();
+    
+};
+
+int main()
+{
+    MenuItemType customer1;
+    customer1.showMenu();
+    customer1.getData();
+    customer1.printCheck();
+    
+    return 0;
+}
+
+
+void MenuItemType::showMenu()
+{
+    cout << "\t\t\tMenu\n1. Plain Egg...............$1.45\n"
+         << "2. Bacon and Egg...........$2.45\n"
+         << "3. Muffin..................$0.99\n"
+         << "4. French Toast............$1.99\n"
+         << "5. Fruit Basket............$2.49\n"
+         << "6. Cereal..................$0.69\n"
+    << "7. Coffee..................$0.50\n";
+    cout << "\nGood morning, let's get your breakfast started.\nPlease enter one or more items from the menu\n(enter '0' to finish):\n";
+}
+
+void MenuItemType::getData()
+{
+    int selection;
+    do
+    {
+        cin >> selection;
+        menuList[selection - 1] += 1;
+    } while (selection > 0 && selection <= 7);
+}
+
+void MenuItemType::printCheck()
+{
+    cout.setf(ios::fixed);
+    cout.setf(ios::showpoint);
+    cout.precision(2);
+    
+    // gross prices per item
+    double gross[7];
+    
+    // total taxes
+    double tax = 0;
+    
+    double net = 0;
+    
+    cout << "\n\tWelcome to Joe's Restaurant\n\n";
+    
+    // calculate gross price and tax
+    for (int i = 0; i < 7; i++)
+    {
+        gross[i] = menuList[i] * prices[i];
+        tax += gross[i] * 0.05;
+        net += gross[i];
+    }
+    net += tax;
+    
+    // Table
+    if (menuList[0] != 0)
+    {
+        cout << menuList[0] << " " << items[0] << "\t\t\t$" << gross[0] << endl;
+    }
+    if (menuList[1] != 0)
+    {
+        cout << menuList[1] << " " << items[1] << "\t\t$" << gross[1] << endl;
+    }
+    if (menuList[2] != 0)
+    {
+        cout << menuList[2] << " " << items[2] << "\t\t\t$" << gross[2] << endl;
+    }
+    if (menuList[3] != 0)
+    {
+        cout << menuList[3] << " " << items[3] << "\t\t$" << gross[3] << endl;
+    }
+    
+    if (menuList[4] != 0)
+    {
+        cout << menuList[4] << " " << items[4] << "\t\t$" << gross[4] << endl;
+    }
+    if (menuList[5] != 0)
+    {
+        cout << menuList[5] << " " << items[5] << "\t\t\t$" << gross[5] << endl;
+    }
+    if (menuList[6] != 0)
+    {
+        cout << menuList[6] << " " << items[6] << "\t\t\t$" << gross[6] << endl;
+    }
+    cout << "\tTax\t\t\t\t$" << tax << endl
+         << "-------------------------\n"
+         << "Amount Due\t\t\t$"
+    << net << endl;
+}
